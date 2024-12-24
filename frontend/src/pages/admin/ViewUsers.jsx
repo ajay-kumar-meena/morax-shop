@@ -38,17 +38,17 @@ function ViewUsers() {
 
   // Handler to delete a user
   const deleteUserHandler = (userId) => {
-    // dispatch(
-    //    deleteUser(userId)
-    // ).then(data => {
-    //     if(data?.payload.success){
-    //         toast.success("User deleted successfully");
-    //         loadUsers();
-    //     } 
-    //     else{
-    //        toast.error("SomeThing went Wrong")
-    //     }
-    // }); 
+    dispatch(
+       deleteUser(userId)
+    ).then(data => {
+        if(data?.payload.success){
+            toast.success("User deleted successfully");
+            loadUsers();
+        } 
+        else{
+           toast.error("SomeThing went Wrong")
+        }
+    }); 
 
   };
 

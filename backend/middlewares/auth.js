@@ -11,8 +11,6 @@ const isAuthenticated = (req,res,next)=>{
 
     const token = req.cookies["morax-token"];
 
-    console.log("Token : ", token)
-
     if(!token) return next(new ErrorHandler("Please first Login to system", 401));
 
     const decodedData = jwt.verify(token,process.env.JWT_SECRET);
