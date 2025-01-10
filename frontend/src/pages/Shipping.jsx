@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { destroyCart, fetchCartItems } from '../store/slices/cart';
 import { makeOrder } from '../store/slices/order';
 import axios from 'axios';
+import { SERVER } from "../config/config.js";
 
 const initialShippingForm = {
     address: '',
@@ -61,8 +62,8 @@ function ShippingForm() {
     })
 
     const managePayment = async()=>{
-      console.log("mangepayment is running....")
-      const { data: { key } } = await axios.get("http://localhost:3000/api/v1/payment/getkey", {
+
+      const { data: { key } } = await axios.get(`${SERVER}/api/v1/payment/getkey`, {
         withCredentials: true, 
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +71,7 @@ function ShippingForm() {
       });
       
       const { data: { order } } = await axios.post(
-        "http://localhost:3000/api/v1/payment/checkout",
+        `${SERVER}/api/v1/payment/checkout`,
         { amount: total },
         {
             headers: {
@@ -90,7 +91,7 @@ function ShippingForm() {
           description: "For buying the product from morax shop",
           image: "https://avatars.githubusercontent.com/u/192409103?v=4",
           order_id: order.id,
-          callback_url: "http://localhost:3000/api/v1/payment/paymentverification",
+          callback_url: `${SERVER}/api/v1/payment/paymentverification`,
           prefill: {
               name: "Ajay Kumar meena",
               email: "ajaymeena045.official@gmail.com",
