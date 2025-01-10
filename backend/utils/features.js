@@ -53,6 +53,7 @@ const uploadFilesToCloudinary = async (files = []) => {
         },
         (error, result) => {
           if (error) return reject(error);
+          
           resolve(result);
         }
       );
@@ -150,5 +151,4 @@ export {
   uploadFilesToCloudinary,
   invalidateCache,
   reduceStock,
-
 };

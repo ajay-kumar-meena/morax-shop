@@ -1,21 +1,23 @@
 import { razorpayInstance } from "../app.js";
 import crypto from "crypto";
 import { Payment } from "../models/payment.js";
+import { TryCatch } from "../middlewares/error.js";
 
 
 
 
-export const getKey = (req, res) =>{
 
-  if(!process.env.RAZORPAY_API_KEY){
-      return res.status(500).json({ message: "Razorpay API Key not found" });
+export const getKey = (req, res,next) => {
+
+  if (!process.env.RAZORPAY_API_KEY) {
+    return res.status(500).json({ message: "Razorpay API Key not found" });
   }
   res.status(200).json({ key: process.env.RAZORPAY_API_KEY })
 }
 
-export const checkout = async (req, res) => {
+export const checkout = TryCatch(async(req, res, next) => {
   const options = {
-    amount: Number(req.body.amount * 100),
+    amount: Number(req.body.amount * 100) || 232,
     currency: "INR",
   };
   const order = await razorpayInstance.orders.create(options);
@@ -24,9 +26,10 @@ export const checkout = async (req, res) => {
     success: true,
     order,
   });
-}; 
+})
 
-export const paymentVerification = async (req, res) => {
+
+export const paymentVerification = TryCatch(async(req, res, next) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
     req.body;
 
@@ -44,10 +47,14 @@ export const paymentVerification = async (req, res) => {
       razorpay_payment_id,
       razorpay_signature,
     });
+    const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
     res.redirect(
-      `http://localhost:3000/paymentsuccess?reference=${razorpay_payment_id}`
+      `${clientUrl}/paymentsuccess?reference=${razorpay_payment_id}`
     );
   } else {
-      res.redirect( `http://localhost:3000/paymentfailed`)
+    res.redirect(`${clientUrl}/paymentfailed`)
   }
-};
+});
+
+
+

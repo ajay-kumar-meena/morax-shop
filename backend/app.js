@@ -21,7 +21,7 @@ dotenv.config({
 
 export const razorpayInstance = new Razorpay({
   key_id: process.env.RAZORPAY_API_KEY,
-  key_secret: process.env.RAZORPAY_APT_SECRET
+  key_secret: process.env.RAZORPAY_API_SECRET
 });
 
 
@@ -48,21 +48,15 @@ app.use(morgan("dev"));
 
 
 
+
 // Apply CORS globally
 app.use(cors({
-  origin: 'http://localhost:5173', // Allow requests from this frontend origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these HTTP methods
+  origin: [process.env.CLIENT_URL,'http://localhost:5173'], // Allow requests from this frontend origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Allow these HTTP methods
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'], // Allow these headers
   credentials: true, // Enable cookies/auth headers
 }));
 
-// Explicitly handle OPTIONS requests (preflight)
-app.options('*', cors({
-  origin: 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  credentials: true,
-}));
 
 const mongoURI = process.env.MONGO_URI || `mongodb://localhost:27017`;
 const  port  = process.env.PORT || 3000;

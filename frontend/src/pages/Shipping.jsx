@@ -58,37 +58,37 @@ function ShippingForm() {
          else{
             toast.error("Your Product quantity has greater than stock to cart ");
          }
-         console.log(data)
     })
 
     const managePayment = async()=>{
-      const { data: { key } } = await axios.get("http://www.localhost:3000/api/v1/payment/getkey", {
-        withCredentials: true, // Include credentials
+      console.log("mangepayment is running....")
+      const { data: { key } } = await axios.get("http://localhost:3000/api/v1/payment/getkey", {
+        withCredentials: true, 
         headers: {
-          "Content-Type": "application/json", // Specify the Content-Type
+          "Content-Type": "application/json",
         },
       });
       
       const { data: { order } } = await axios.post(
         "http://localhost:3000/api/v1/payment/checkout",
-        { amount }, // Request body
+        { amount: total },
         {
-          withCredentials: true, // Include credentials
-          headers: {
-            "Content-Type": "application/json", // Specify the Content-Type
-          },
+            headers: {
+                "Content-Type": "application/json"
+            },
+            withCredentials: true, 
         }
       );
+    
       
-      console.log("managePyament functin.... running....")
-
+     
       const options = {
           key,
           amount: order.amount,
           currency: "INR",
           name: user.name,
           description: "For buying the product from morax shop",
-          image: "https://avatars.githubusercontent.com/u/25058652?v=4",
+          image: "https://avatars.githubusercontent.com/u/192409103?v=4",
           order_id: order.id,
           callback_url: "http://localhost:3000/api/v1/payment/paymentverification",
           prefill: {

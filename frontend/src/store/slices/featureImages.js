@@ -25,22 +25,26 @@ export const addFeatureImage = createAsyncThunk(
 );
 
 
-export const getFeatureImages = createAsyncThunk("featureimage/get", async () => {
-  const response = await axios.get(`http://localhost:3000/api/v1/featureimages/get`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true,
-    });
-  return response.data;
-});
+export const getFeatureImages = createAsyncThunk(
+  "featureimage/get",
+  async () => {
+    const response = await axios.get(`http://localhost:3000/api/v1/featureimages/get`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      });
+    return response.data;
+  });
+
+
 
 export const deleteFeatureImage = createAsyncThunk(
-  "cart/deleteCartItem",
-  async (featureImageId) => {
+  "cart/delete",
+   async (id) => {
     const response = await axios.delete(
-      `http://localhost:3000/api/v1/featureimages/${featureImageId}`,
+      `http://localhost:3000/api/v1/featureimages/${id}`,
       {
         headers: {
           'Content-Type': 'application/json',

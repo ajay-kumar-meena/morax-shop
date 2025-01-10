@@ -12,7 +12,7 @@ const calculateSubtotal = (items) => {
   return 0;
 };
 
-const calculateTax = (subtotal, taxRate = 30) => (subtotal * taxRate) / 100;
+const calculateTax = (subtotal, taxRate = 19) => (subtotal * taxRate) / 100;
 const calculateTotal = (subtotal, tax, shippingCharge) => subtotal + tax + shippingCharge;
 
 // Initial state

@@ -45,22 +45,28 @@ export const addIamge = TryCatch(async (req, res, next) => {
   });
 });
 
-export const removeImage = TryCatch(async (req, res, next) => {h
+export const removeImage = TryCatch(async (req, res, next) => {
   
-  const { featureImageId } = req.params;
+  const { id } = req.params;
   
-  const image = await Features.findById(featureImageId);
+  const featureImage = await Features.findById(id);
 
-  if(!image) return next(new ErrorHandler("Image Not Found", 404));
+  if(!featureImage) return next(new ErrorHandler("Image Not Found", 404));
+  
+  if (!featureImage.image.public_id) {
+    return next(new ErrorHandler("Image or image details not found", 404));
+  }
+  
+  const featureImagePublicId = featureImage.image.public_id;
 
-  await deletFilesFromCloudinary([image.public_id]);
+  await deletFilesFromCloudinary([featureImagePublicId]);
 
   await Features.deleteOne();
 
 
   return res.status(200).json({
     success: true,
-    message: "Features Delete Successfully",
+    message: "Features image Delete Successfully",
   });
 });
 

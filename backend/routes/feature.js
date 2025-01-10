@@ -7,9 +7,9 @@ const app = express.Router();
 
 app.get('/get', getImages);
 
-// app.use(adminOnly);
+app.use(adminOnly);
 
-app.post('/add',singleAvatar, addIamge );
+app.post('/add',singleAvatar, addIamge);
 
 app.delete('/:id',removeImage);
 

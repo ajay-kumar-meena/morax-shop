@@ -18,9 +18,9 @@ const registerUser = TryCatch(async(req,res,next)=>{
      
      if(!name || !email || !gender || !dob || !password) return next(new ErrorHandler("please provide all fields",400))
      
-    
-    const profile = await uploadFilesToCloudinary([photo]);
 
+    const profile = await uploadFilesToCloudinary([photo]);
+   
     const user = await User.create({
          name,
          email,

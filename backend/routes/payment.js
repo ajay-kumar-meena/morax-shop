@@ -9,6 +9,6 @@ const app = express.Router();
 
 app.get("/getkey", getKey)
 app.post('/checkout', checkout);
-app.post('paymentverification', paymentVerification);
+app.post('/paymentverification', paymentVerification);
 
 export default app;

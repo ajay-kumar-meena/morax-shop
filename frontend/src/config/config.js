@@ -31,6 +31,10 @@ const sliderSettings = {
 
 
 
+export const SERVER = ''
+
+
+
 const brands  = [
     {
       name: "Nike",
